@@ -1,5 +1,14 @@
 public abstract class MotorControllers
 {
+	public abstract class MotorControllers
+{
+	MotorControl motor;
+	
+	MotorControllers() //propably MotorX as paramteter
+	{
+		MotorControl motorA = new MotorControl();
+	}
+	
 	public void PID()
 	{
 		
