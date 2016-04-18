@@ -40,6 +40,27 @@ public class MotorIdent
 		}
 	}
 	
+	public static void bistableController(int referenceValue, int offset)
+	{
+		m1.resetTachoCount();
+		m1.forward();
+		
+		while(true)
+		{
+			if(m1.getTachoCount() > referenceValue)
+			{
+				m1.forward();
+				m1.setPower(10);
+			}
+			else
+			{
+				m1.backward();
+				m1.setPower(10);
+			}
+			
+		}
+	}
+	
     public static void main(String[] args) 
 	{
 		// drawInfo("Identtyfikacja silnika");
