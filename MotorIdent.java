@@ -8,6 +8,13 @@ public class MotorIdent
 	public static final double Ti = 3;
 	public static final double Td = 0.42;
 	
+    public static void main(String[] args) 
+	{
+		decision();
+		Delay.msDelay(50);
+		Button.waitForAnyPress();
+    }
+	//regulator PID
 	public static void controllerPID(int referenceValue)
 	{
 		double eeSum = 0;
@@ -30,6 +37,7 @@ public class MotorIdent
 		
 		while(true)
 		{	
+			//przerwij
 			if(Button.ESCAPE.isDown())
 				{
 					m1.stop();
@@ -39,6 +47,7 @@ public class MotorIdent
 			LCD.drawString("Wyjscie: " + m1.getTachoCount(), 0, 4);
 			Delay.msDelay(delay); //czas cyklu ok. tc
 			
+			//obliczanie sterowania
 			error = refValue - m1.getTachoCount();
 			power = power_ + Kp * (error - error_) + Kp * tc/Ti*error_ + Kp * Td/tc*(error+error__-2.0*error_);
 			power_ = power;
@@ -59,6 +68,7 @@ public class MotorIdent
 		}
 	}
 	
+	//regulator dwustanowy
 	public static void bistableController(int referenceValue, int offset, int power)
 	{
 		LCD.clear();
@@ -93,13 +103,7 @@ public class MotorIdent
 		}
 	}
 	
-    public static void main(String[] args) 
-	{
-		decision();
-		Delay.msDelay(50);
-		Button.waitForAnyPress();
-    }
-	
+	//glowna petla obslugi zdarzen
 	public static void decision()
 	{
 		info();
@@ -119,13 +123,17 @@ public class MotorIdent
 			}
 		}
 	}
-	 public static void info()
-	 {
-		LCD.clear();
-		LCD.drawString("Lewy: PID", 0, 0);
-		LCD.drawString("Prawy: dwustawny",0,2);
-		LCD.drawString("Enter: pomiar",0,4);
-	 }
+	
+	//wyswietlanie informacji w menu glownym
+	public static void info()
+	{
+	LCD.clear();
+	LCD.drawString("Lewy: PID", 0, 0);
+	LCD.drawString("Prawy: dwustawny",0,2);
+	LCD.drawString("Enter: pomiar",0,4);
+	}
+	
+	//identyfikacja obiektu i zapis do pliku
 	public static void identToFile(int referenceVal)
 	{
 		drawInfo("Identyfikacja");
@@ -185,7 +193,8 @@ public class MotorIdent
 		}
 		Delay.msDelay(200);
 	}
-		
+	
+	//wyswietlanie prostych informacji na ekranie
 	public static void drawInfo(String info)
 	{
 		LCD.clear();
